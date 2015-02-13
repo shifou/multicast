@@ -1,2 +1,2 @@
 # multicast
-Lab 2: Multicast Communication
+Distributed Systems Lab 2: Multicast Communication
