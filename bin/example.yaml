@@ -1,0 +1,67 @@
+configuration :
+- name : alice
+  ip   : 128.237.207.187
+  port : 12344
+- name : bob
+  ip   : 128.237.211.92
+  port : 14255
+- name : charlie
+  ip   : 128.237.211.92
+  port : 12355
+- name : logger
+  ip   : 128.237.207.187
+  port : 12644
+
+sendRules :
+  - action : ssss      
+    src    : alice       
+    dest   : bob
+    kind   : aa
+receiveRules :
+  - action : delay      
+    src    : alice      
+    dest   : logger
+  - action : drop 
+    src    : alice
+    dest   : bob
+    kind   : Ack
+  # - action : duplicate
+  #   src    : charlie
+  #   dest   : bob
+  #   kind   : Ack
+  # - action : drop 
+  #   src    : bob
+  #   dest   : alice
+  #   kind   : Ack
+  #   seqNum : 4
+  # - action : duplicate
+  #   src    : bob
+  #   dest   : alice
+  #   kind   : Lookup
+  # - action : duplicate
+  #   src    : charlie
+  #   dest   : bob
+  #   kind   : Lookup
+  # - action : delay
+  #   src    : alice
+  #   dest   : charlie
+    
+receiveRules :
+  # - action : drop      
+  #   src    : charlie       
+  #   dest   : bob
+  #   kind   : Ack
+  #   duplicate : false 
+  # - action : delay
+  #   src    : charlie
+  #   dest   : bob
+  #   kind   : Lookup
+  # - action : drop
+  #   src    : bob
+  #   dest   : alice
+  #   kind   : Lookup
+  # - action : drop
+  #   src    : alice
+  #   dest   : charlie
+  #   kind   : Ack
+
