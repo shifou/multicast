@@ -143,6 +143,8 @@ public class MessagePasser {
 		if(this.logicalTime)
 		{
 			this.lt.Increment();
+			System.out.println("send timestamp from: "+username+" with id "+id+" "+this.lt.toString());
+			
 			mes.lt=this.lt;
 		}
 		else
@@ -188,6 +190,7 @@ public class MessagePasser {
 				if(this.logicalTime)
 				{
 					this.lt.Increment();
+					System.out.println("increase timestamp due to log as: "+username+" with id "+id+" "+this.lt.toString());
 					mes.lt=this.lt;
 				}
 				else
@@ -257,6 +260,7 @@ public class MessagePasser {
 		if(this.logicalTime)
 		{
 			this.lt.Increment();
+			System.out.println("increase timestamp due to log as: "+username+" with id "+id+" "+this.lt.toString());
 			mes.lt=this.lt;
 		}
 		else
@@ -275,8 +279,10 @@ public class MessagePasser {
 		{
 			//System.out.println("check queue: "+messages.isEmpty());
 			Message mes = messages.poll();
-			
-			//System.out.println(username+" rec timestamp: "+this.vt.toString());
+			if(this.logicalTime)
+				System.out.println(username+" rec timestamp: "+this.lt.toString());
+			else
+				System.out.println(username+" rec timestamp: "+this.vt.toString());
 			if(log)
 			{
 				//System.out.println("-------");
