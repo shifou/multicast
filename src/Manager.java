@@ -59,6 +59,15 @@ public class Manager {
 				case "issue":
 					messagePasser.issueTimestamp();
 					break;
+				case "multicast":
+					message = new Message(args[1],"",hold[2], hold[3],hold[4]);
+					message.multicast=true;
+					message.groupName=hold[1];
+					message.set_seqNum(seq++);
+					if(hold[5].equals("y"))
+						messagePasser.log=true;
+					messagePasser.multicast(message);
+					break;
 				default:
 					System.err.println("Illegal input format! Please enter again!");
 				}
