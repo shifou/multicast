@@ -10,6 +10,7 @@ public class configFileParse {
 		private List<LinkedHashMap<String ,Object>> NodeInfo;
 		private ArrayList<LinkedHashMap<String,Object>> sendRules;
 		private ArrayList<LinkedHashMap<String,Object>> recvRules;
+		private ArrayList<LinkedHashMap<String,Object>> groups;
 		
 		@SuppressWarnings("unchecked")
 		public configFileParse(String configFile) throws FileNotFoundException {
@@ -48,15 +49,24 @@ public class configFileParse {
 				{
 					
 				
-			    for(LinkedHashMap<String, Object> p :(ArrayList<LinkedHashMap<String, Object>>)data.get("receiveRules"))
-			    {
+			    	for(LinkedHashMap<String, Object> p :(ArrayList<LinkedHashMap<String, Object>>)data.get("receiveRules"))
+			    	{
 			    	LinkedHashMap<String, Object> tmp = new LinkedHashMap<String, Object>();
 			    	tmp.putAll(p);
 			    	recvRules.add(tmp);	    	
 			    	
-			    }
+			    	}
 				}
-			   
+			    
+			    if(data.get("groups") != null)
+				{
+			    	for(LinkedHashMap<String, Object> p : (ArrayList<LinkedHashMap<String, Object>>)data.get("groups"))
+			    	{
+			    		LinkedHashMap<String, Object> tmp = new LinkedHashMap<String, Object>();
+			    		tmp.putAll(p);
+			    		groups.add(tmp);
+			    	}
+				}
 			  
 			}
 			
@@ -65,7 +75,26 @@ public class configFileParse {
 		{
 				return NodeInfo;
 		}
+		// find the group(LinkedHashMap) by the groupName
+		@SuppressWarnings("unchecked")
+		public LinkedHashMap<String, ArrayList<String>> getGroups()
+		{
+			if(groups.isEmpty())
+			{
+				return null;
+			}
+			LinkedHashMap<String, ArrayList<String>> tmp = new LinkedHashMap<String, ArrayList<String>>();
+			for(LinkedHashMap<String, Object> g : groups)
+			{
+				if(g.get("name") != null)
+				{
+					tmp.put((String) g.get("name"), (ArrayList<String>)g.get("members"));	
+				}
+			}
+			return tmp;
 			
+		}
+		
 		public LinkedHashMap<String, Object> findByName(String name)
 			{
 				if(NodeInfo.isEmpty())
@@ -80,8 +109,7 @@ public class configFileParse {
 					}
 				}
 				return null;
-			}
-			
+			}	
 		public LinkedHashMap<String, nodeInfo> getNetMap(String username)
 		{
 			if(NodeInfo.isEmpty())
@@ -100,6 +128,7 @@ public class configFileParse {
 			
 			return tmp;
 		}
+		
 		public int getPortbyName(String name)
 		{	
 			if(NodeInfo.isEmpty())
