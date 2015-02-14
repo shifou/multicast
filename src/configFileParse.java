@@ -76,20 +76,23 @@ public class configFileParse {
 				return NodeInfo;
 		}
 		// find the group(LinkedHashMap) by the groupName
-		public LinkedHashMap<String, Object> getGroupMember(String groupName)
+		@SuppressWarnings("unchecked")
+		public LinkedHashMap<String, ArrayList<String>> getGroups()
 		{
 			if(groups.isEmpty())
 			{
 				return null;
 			}
+			LinkedHashMap<String, ArrayList<String>> tmp = new LinkedHashMap<String, ArrayList<String>>();
 			for(LinkedHashMap<String, Object> g : groups)
 			{
-				if(groupName.equals(g.get("name")))
+				if(g.get("name") != null)
 				{
-					return g;
+					tmp.put((String) g.get("name"), (ArrayList<String>)g.get("members"));	
 				}
 			}
-			return null;
+			return tmp;
+			
 		}
 		
 		public LinkedHashMap<String, Object> findByName(String name)
