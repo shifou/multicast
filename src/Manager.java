@@ -6,8 +6,26 @@ import java.io.InputStreamReader;
 public class Manager {
 	public static void main(String[] args) throws IOException, InterruptedException{
 		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-		MessagePasser messagePasser = new MessagePasser(args[0], args[1],false);
 		int seq=0;
+		boolean flag=true,vec=false;;
+		while(flag)
+		{
+			System.out.println("input vector or logical: ");
+			switch(in.readLine())
+			{
+			case "vector":
+				 vec=true;
+				 flag=false;
+				 break;
+			case "logical":
+				flag=false;
+				break;
+			default:
+				System.out.println("wrong input format");
+				break;
+			}
+		}
+		MessagePasser messagePasser = new MessagePasser(args[0], args[1],vec);
 		while(true){
 			System.out.println("Enter the command : send or rec");
 			String cm = in.readLine();

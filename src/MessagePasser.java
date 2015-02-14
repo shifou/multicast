@@ -5,6 +5,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.concurrent.ConcurrentHashMap;
@@ -12,8 +13,6 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 
 public class MessagePasser {
-
-
 	public String username;
 	public String filename;
 	public User user;
@@ -34,6 +33,7 @@ public class MessagePasser {
 	public ConcurrentLinkedQueue<Message> delaySend = new ConcurrentLinkedQueue<Message>();
 	public ConcurrentLinkedQueue<Message> delayRec = new ConcurrentLinkedQueue<Message>();
 	public ConcurrentLinkedQueue<Message> messages = new ConcurrentLinkedQueue<Message>();
+	public ArrayList<String> groups = new ArrayList<String>();
 	public MessagePasser(String configuration_filename, String local_name,boolean lg) throws FileNotFoundException {
 		config = new configFileParse(configuration_filename);
 		filename = configuration_filename;
@@ -48,6 +48,7 @@ public class MessagePasser {
 			return;
 		}
 		log=false;
+		groups = config.getGroups(username);
 		nodeNum = config.getSize();  // starts from 1;
 		System.out.println("---"+nodeNum);
 		id = config.getId(username); // ID starts from 0, if can't find return -1
