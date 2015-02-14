@@ -351,5 +351,11 @@ public class MessagePasser {
 		else
 			System.out.println(this.vt.toString());
 	}
+
+
+	public void multicast(Message message) {
+		// TODO Auto-generated method stub
+		
+	}
 }
 
