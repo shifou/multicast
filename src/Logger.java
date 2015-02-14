@@ -46,7 +46,7 @@ public class Logger {
 		}
 		nodes= config.getNetMap("logger");
 		size = config.getSize();
-		user = new User("logger", port,messageRec,sockets, streams,nodes,logicalTime);
+		user = new User("logger", port,messageRec,sockets, streams,nodes,logicalTime,config);
 		new Thread(user).start();
 	
 	}

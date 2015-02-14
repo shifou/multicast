@@ -11,7 +11,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
 public class Connection implements Runnable {
 	private Socket socket;
-	ConcurrentLinkedQueue messageQueue;
+	public ConcurrentLinkedQueue<Message> messageQueue;
 	private volatile boolean running;
 	public Vector<Message> messageRec = new Vector<Message>();
 	private ObjectInputStream objInput;
@@ -23,6 +23,7 @@ public class Connection implements Runnable {
 	public boolean logicalTime;
 	public String name;
 	public boolean log;
+	public configFileParse config;
 	public Connection(String name,Socket slaveSocket, ObjectOutputStream out, ObjectInputStream objInput2, ConcurrentLinkedQueue mq, ConcurrentHashMap<String, Socket> sk, ConcurrentHashMap<String, ObjectOutputStream> st) throws IOException {
 		// TODO Auto-generated constructor stub
 		socket = slaveSocket;
@@ -36,9 +37,11 @@ public class Connection implements Runnable {
 		this.st=st;
 		messageQueue=mq;
 	}
-	public Connection(String name,Socket slaveSocket, ObjectOutputStream out, ObjectInputStream objInput2, Vector<Message> messageRec,boolean logicalTime, ConcurrentHashMap<String, Socket> sk2, ConcurrentHashMap<String, ObjectOutputStream> st2) throws IOException 
+	public Connection(String name,Socket slaveSocket, ObjectOutputStream out, ObjectInputStream objInput2, Vector<Message> messageRec,boolean logicalTime, ConcurrentHashMap<String, Socket> sk2, ConcurrentHashMap<String, ObjectOutputStream> st2, configFileParse config) throws IOException 
 	{
+		this.config=config;
 		sk=sk2;
+		messageQueue=new ConcurrentLinkedQueue<Message>();
 		st=st2;
 		this.name=name;
 		socket = slaveSocket;
@@ -58,12 +61,36 @@ public class Connection implements Runnable {
 				try {
 					mes = (Message) objInput.readObject();
 					if(log)
-					System.out.println("logger rec: "+mes.toString());
+					
 					if(log==false)
 						messageQueue.offer(mes);
 					else
 					{
-						messageRec.add(mes);
+						String hold = config.recvRule(mes);
+						switch(hold){
+						case "drop":
+							break;
+						case "duplicate":
+							//System.out.println("receive: duplicate");
+							messageRec.add(mes);
+							//messageRec.add(mes);
+							while(!messageQueue.isEmpty()){
+								messageRec.add(messageQueue.poll());
+							}
+							break;
+						case "delay":
+							//System.out.println("receive: delay");
+							messageQueue.offer(mes);
+							break;
+						default:
+							//default action
+							//System.out.println("receive: default");
+							messageRec.add(mes);
+							System.out.println("logger rec: "+mes.toString());
+							while(!messageQueue.isEmpty()){
+								messageRec.add(messageQueue.poll());
+							}
+						}
 					}
 					
 				} catch (ClassNotFoundException e) {

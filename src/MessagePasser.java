@@ -337,5 +337,17 @@ public class MessagePasser {
 				return this.vt.toString();
 				
 	}
+
+	public void issueTimestamp() {
+		if(this.logicalTime)
+			this.lt.Increment();
+			else
+				this.vt.Increment(id);
+		System.out.print("now timestamp: ");
+		if(this.logicalTime)
+			System.out.println(this.lt.toString());
+		else
+			System.out.println(this.vt.toString());
+	}
 }
 

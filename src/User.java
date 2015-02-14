@@ -28,6 +28,7 @@ public class User implements Runnable{
 	public ConcurrentHashMap<String, ObjectOutputStream> st;
 	public LinkedHashMap<String, nodeInfo> nodes;
 	public boolean log;
+	public configFileParse config;
 	public User(String name,int port,ConcurrentLinkedQueue messageRec, ConcurrentHashMap<String, Socket> sockets, ConcurrentHashMap<String, ObjectOutputStream> streams, LinkedHashMap<String, nodeInfo> nodes)
 	{
 		log=false;
@@ -46,7 +47,7 @@ public class User implements Runnable{
      }
         System.out.println("start User "+name+" at: "+port);
 	}
-	public User(String name,int port,Vector messageRec, ConcurrentHashMap<String, Socket> sockets, ConcurrentHashMap<String, ObjectOutputStream> streams, LinkedHashMap<String, nodeInfo> nodes,boolean logicalTime)
+	public User(String name,int port,Vector messageRec, ConcurrentHashMap<String, Socket> sockets, ConcurrentHashMap<String, ObjectOutputStream> streams, LinkedHashMap<String, nodeInfo> nodes,boolean logicalTime, configFileParse config)
 	{
 		log=true;
 		this.logicalTime=logicalTime;
@@ -56,6 +57,7 @@ public class User implements Runnable{
 		this.messageRec=messageRec;
 		this.username=name;
 		running = true;
+		this.config=config;
         try {
          serverSocket = new ServerSocket((short)port);
      } catch (IOException e) {
@@ -100,7 +102,7 @@ public class User implements Runnable{
 			if(log==false)
              handler = new Connection(name,slaveSocket,out,objInput,messageQueue,sk,st);
 			else
-				handler = new Connection(name,slaveSocket,out,objInput,this.messageRec,logicalTime,sk,st);
+				handler = new Connection(name,slaveSocket,out,objInput,this.messageRec,logicalTime,sk,st,config);
              //System.out.println(slaveSocket.getInetAddress()+"\t"+slaveSocket.getPort());
 				new Thread(handler).start();
 	           // System.out.println("begin send");
