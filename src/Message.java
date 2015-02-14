@@ -15,11 +15,14 @@ public class Message implements Comparable<Message>,Serializable{
 	public int seq;
 	public int id;
 	public boolean logicalTime;
+	public boolean multicast = false;
+	public String groupName;
 	public LogicalTimeStamp lt;
 	public VectorTimeStamp vt;
 	public Message(String hostname,String dest, String action, String kind, String data){
 		this.hostname=src=hostname;
 		des = dest;
+		groupName="";
 		this.action=action;
 		this.kind = kind;
 		this.data = data;

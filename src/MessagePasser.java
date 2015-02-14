@@ -5,6 +5,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.concurrent.ConcurrentHashMap;
@@ -12,8 +13,6 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 
 public class MessagePasser {
-
-
 	public String username;
 	public String filename;
 	public User user;
@@ -34,6 +33,7 @@ public class MessagePasser {
 	public ConcurrentLinkedQueue<Message> delaySend = new ConcurrentLinkedQueue<Message>();
 	public ConcurrentLinkedQueue<Message> delayRec = new ConcurrentLinkedQueue<Message>();
 	public ConcurrentLinkedQueue<Message> messages = new ConcurrentLinkedQueue<Message>();
+	public HashMap<String,ArrayList<String>> groups = new HashMap<String,ArrayList<String>>();
 	public MessagePasser(String configuration_filename, String local_name,boolean lg) throws FileNotFoundException {
 		config = new configFileParse(configuration_filename);
 		filename = configuration_filename;
@@ -48,6 +48,7 @@ public class MessagePasser {
 			return;
 		}
 		log=false;
+		groups = config.getGroups();
 		nodeNum = config.getSize();  // starts from 1;
 		System.out.println("---"+nodeNum);
 		id = config.getId(username); // ID starts from 0, if can't find return -1
@@ -133,7 +134,7 @@ public class MessagePasser {
 			System.out.println("can not find this node information in the config");
 			return;
 		}
-		String hold = config.sendRule(mes);
+		
 		//System.out.println(hold+"-----");
 		
 		mes.id=u2i.get(mes.src);
@@ -151,7 +152,7 @@ public class MessagePasser {
 			mes.vt=this.vt;
 		}
 		//.out.println("???"+this.vt.toString());
-		
+		String hold = config.sendRule(mes);
 		switch(hold){
 			case "drop":
 				System.out.println("drop");
@@ -274,18 +275,7 @@ public class MessagePasser {
 		{
 			//System.out.println("check queue: "+messages.isEmpty());
 			Message mes = messages.poll();
-			if(mes.logicalTime)
-			{
-				this.lt.updateTimeStamp(mes.lt);
-				this.lt.Increment();
-				mes.lt=this.lt;
-			}
-			else
-			{
-				this.vt.updateTimeStamp(mes.vt);
-				this.vt.Increment(id);
-				mes.vt=this.vt;
-			}
+			
 			//System.out.println(username+" rec timestamp: "+this.vt.toString());
 			if(log)
 			{
@@ -302,6 +292,18 @@ public class MessagePasser {
 		Message mes;
 		if(!messageRec.isEmpty()){
 			mes = messageRec.poll();
+			if(mes.logicalTime)
+			{
+				this.lt.updateTimeStamp(mes.lt);
+				this.lt.Increment();
+				mes.lt=this.lt;
+			}
+			else
+			{
+				this.vt.updateTimeStamp(mes.vt);
+				this.vt.Increment(id);
+				mes.vt=this.vt;
+			}
 			String action = this.config.recvRule(mes);
 			switch(action){
 			case "drop":
@@ -348,6 +350,12 @@ public class MessagePasser {
 			System.out.println(this.lt.toString());
 		else
 			System.out.println(this.vt.toString());
+	}
+
+
+	public void multicast(Message message) {
+		// TODO Auto-generated method stub
+		
 	}
 }
 

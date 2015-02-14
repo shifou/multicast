@@ -84,8 +84,26 @@ public class Logger {
 		}
 	}
 	public static void main(String[] args) throws IOException {
-		Logger logger = new Logger(args[0],false);
 		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+		boolean flag=true,vec=false;;
+		while(flag)
+		{
+			System.out.println("input vector or logical: ");
+			switch(in.readLine())
+			{
+			case "vector":
+				 vec=true;
+				 flag=false;
+				 break;
+			case "logical":
+				flag=false;
+				break;
+			default:
+				System.out.println("wrong input format");
+				break;
+			}
+		}
+		Logger logger = new Logger(args[0],vec);
 		while(true)
 		{
 			String command = in.readLine();
