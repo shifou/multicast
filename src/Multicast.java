@@ -50,6 +50,39 @@ public class Multicast {
 		case "rec":
 			System.out.println("receive multicast");
 			mp.messageRec.offer(mes);
+			
+			int len = this.holdBackQueueList.get(mes.groupName).size();
+			int j = 0;
+			int flag = 0;
+			while(j < len)
+			{
+				Message tmp = this.holdBackQueueList.get(mes.groupName).get(j);
+				for( int k =0; k < tmp.multicastVector.length; k++)
+				{
+					if(k != mp.u2i.get(mes.src))
+					{
+						if(tmp.multicastVector[k] > curVec[k])
+						{
+							flag = 1;
+							break;
+						}
+					}else{
+						if(tmp.multicastVector[k] != curVec[k] + 1)
+						{
+							flag = 1;
+							break;
+						}
+					}
+				}
+				if(flag ==1)
+				{
+					break;
+				}else{
+					System.out.println("accept message from buffer");
+					mp.messageRec.offer(tmp);
+					this.holdBackQueueList.get(mes.groupName).removeFirst();
+				}
+			}
 			break;
 		case "drop":
 			System.out.println("drop multicast");
@@ -60,38 +93,7 @@ public class Multicast {
 			break;
 		}
 		
-		int len = this.holdBackQueueList.get(mes.groupName).size();
-		int j = 0;
-		int flag = 0;
-		while(j < len)
-		{
-			Message tmp = this.holdBackQueueList.get(mes.groupName).get(j);
-			for( int k =0; k < tmp.multicastVector.length; k++)
-			{
-				if(k != mp.u2i.get(mes.src))
-				{
-					if(tmp.multicastVector[k] > curVec[k])
-					{
-						flag = 1;
-						break;
-					}
-				}else{
-					if(tmp.multicastVector[k] != curVec[k] + 1)
-					{
-						flag = 1;
-						break;
-					}
-				}
-			}
-			if(flag ==1)
-			{
-				break;
-			}else{
-				System.out.println("accept message from buffer");
-				mp.messageRec.offer(tmp);
-				this.holdBackQueueList.get(mes.groupName).removeFirst();
-			}
-		}
+		
 	}
 	
 	private void insert(LinkedList<Message> linkedList, Message mes) {
@@ -117,7 +119,7 @@ public class Multicast {
 			}
 			if(i == tmp.multicastVector.length-1)
 			{
-				linkedList.add(i,mes);
+				linkedList.addLast(mes);
 				break;
 			}
 		}
