@@ -26,4 +26,8 @@ public class Multicast {
 		// TODO Auto-generated method stub
 		
 	}
+	public void receive(Message mes) {
+		// TODO Auto-generated method stub
+		mp.messageRec.offer(mes);
+	}
 }

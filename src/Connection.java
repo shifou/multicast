@@ -24,7 +24,8 @@ public class Connection implements Runnable {
 	public String name;
 	public boolean log;
 	public configFileParse config;
-	public Connection(String name,Socket slaveSocket, ObjectOutputStream out, ObjectInputStream objInput2, ConcurrentLinkedQueue mq, ConcurrentHashMap<String, Socket> sk, ConcurrentHashMap<String, ObjectOutputStream> st) throws IOException {
+	public Multicast multicast=null;
+	public Connection(String name,Socket slaveSocket, ObjectOutputStream out, ObjectInputStream objInput2, ConcurrentLinkedQueue mq, ConcurrentHashMap<String, Socket> sk, ConcurrentHashMap<String, ObjectOutputStream> st, Multicast multicast) throws IOException {
 		// TODO Auto-generated constructor stub
 		socket = slaveSocket;
 		objOutput = out;
@@ -36,6 +37,7 @@ public class Connection implements Runnable {
 		this.sk=sk;
 		this.st=st;
 		messageQueue=mq;
+		this.multicast=multicast;
 	}
 	public Connection(String name,Socket slaveSocket, ObjectOutputStream out, ObjectInputStream objInput2, Vector<Message> messageRec,boolean logicalTime, ConcurrentHashMap<String, Socket> sk2, ConcurrentHashMap<String, ObjectOutputStream> st2, configFileParse config) throws IOException 
 	{
@@ -63,7 +65,12 @@ public class Connection implements Runnable {
 					if(log)
 					
 					if(log==false)
-						messageQueue.offer(mes);
+					{
+						if(mes.multicast)
+							this.multicast.receive(mes);
+						else
+							messageQueue.offer(mes);
+					}
 					else
 					{
 						String hold = config.recvRule(mes);

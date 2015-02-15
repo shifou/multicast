@@ -34,7 +34,7 @@ public class MessagePasser {
 	public ConcurrentLinkedQueue<Message> delayRec = new ConcurrentLinkedQueue<Message>();
 	public ConcurrentLinkedQueue<Message> messages = new ConcurrentLinkedQueue<Message>();
 	public HashMap<String,ArrayList<String>> groups = new HashMap<String,ArrayList<String>>();
-	Multicast multicast;	
+	public Multicast multicast;	
 	public MessagePasser(String configuration_filename, String local_name,boolean lg) throws FileNotFoundException {
 		config = new configFileParse(configuration_filename);
 		filename = configuration_filename;
@@ -69,7 +69,7 @@ public class MessagePasser {
 			vt = new VectorTimeStamp(nodeNum);
 		//System.out.println(vt.toString());
 		multicast = new Multicast(this); 
-		user = new User(username, port,messageRec,sockets, streams,nodes);
+		user = new User(username, port,messageRec,sockets, streams,nodes,multicast);
 		new Thread(user).start();
 		
 	}
@@ -222,7 +222,7 @@ public class MessagePasser {
 				 Connection handler;
 				 out.writeObject(username);
 				 //out.writeChars(this.username);
-	             handler = new Connection(mes.des,sendd,out,objInput,messageRec,sockets,streams);
+	             handler = new Connection(mes.des,sendd,out,objInput,messageRec,sockets,streams,multicast);
 	             new Thread(handler).start();
 		         
 			} catch (UnknownHostException e) {
@@ -362,9 +362,5 @@ public class MessagePasser {
 	}
 
 
-	public void multicast(Message message) {
-		// TODO Auto-generated method stub
-		
-	}
 }
 
