@@ -134,7 +134,7 @@ public class Multicast {
 			{
 				if(i != index)
 				{
-					if(curVec[i] <= recVec[i])
+					if(curVec[i] >= recVec[i])
 					{
 						counter ++;
 					}
@@ -144,7 +144,7 @@ public class Multicast {
 			{
 				return "rec";
 			}else{
-				return null;
+				return "hold";
 			}
 		}else if(curVec[index]+1 < recVec[index])
 		{
@@ -165,7 +165,7 @@ public class Multicast {
 				return "hold";
 			}
 			else{
-				return null;
+				return "drop";
 			}
 		}else{
 			// reject
