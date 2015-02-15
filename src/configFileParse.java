@@ -75,7 +75,7 @@ public class configFileParse {
 		{
 				return NodeInfo;
 		}
-		// find the group(LinkedHashMap) by the groupName
+		// return groups
 		@SuppressWarnings("unchecked")
 		public LinkedHashMap<String, ArrayList<String>> getGroups()
 		{
@@ -110,6 +110,7 @@ public class configFileParse {
 				}
 				return null;
 			}	
+
 		public LinkedHashMap<String, nodeInfo> getNetMap(String username)
 		{
 			if(NodeInfo.isEmpty())
