@@ -34,6 +34,7 @@ public class MessagePasser {
 	public ConcurrentLinkedQueue<Message> delayRec = new ConcurrentLinkedQueue<Message>();
 	public ConcurrentLinkedQueue<Message> messages = new ConcurrentLinkedQueue<Message>();
 	public HashMap<String,ArrayList<String>> groups = new HashMap<String,ArrayList<String>>();
+	Multicast multicast;	
 	public MessagePasser(String configuration_filename, String local_name,boolean lg) throws FileNotFoundException {
 		config = new configFileParse(configuration_filename);
 		filename = configuration_filename;
@@ -67,8 +68,10 @@ public class MessagePasser {
 		else
 			vt = new VectorTimeStamp(nodeNum);
 		//System.out.println(vt.toString());
+		multicast = new Multicast(this); 
 		user = new User(username, port,messageRec,sockets, streams,nodes);
 		new Thread(user).start();
+		
 	}
 	
 	private HashMap<String, Socket> getSocketMap(

@@ -27,7 +27,7 @@ public class Manager {
 		}
 		MessagePasser messagePasser = new MessagePasser(args[0], args[1],vec);
 		while(true){
-			System.out.println("Enter the command : send or rec");
+			System.out.println("Enter the command : send, rec, lrec, print, issue, multicast");
 			String cm = in.readLine();
 			String[] hold = cm.split("#");
 			messagePasser.log=false;
@@ -63,10 +63,15 @@ public class Manager {
 					message = new Message(args[1],"",hold[2], hold[3],hold[4]);
 					message.multicast=true;
 					message.groupName=hold[1];
+					if(messagePasser.groups.containsKey(hold[1])==false)
+					{
+						System.out.println("no such group");
+						break;
+					}
 					message.set_seqNum(seq++);
 					if(hold[5].equals("y"))
 						messagePasser.log=true;
-					messagePasser.multicast(message);
+					messagePasser.multicast.send(message);
 					break;
 				default:
 					System.err.println("Illegal input format! Please enter again!");

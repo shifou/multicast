@@ -16,9 +16,11 @@ public class Message implements Comparable<Message>,Serializable{
 	public int id;
 	public boolean logicalTime;
 	public boolean multicast = false;
-	public String groupName;
+	public String groupName="NULL";
 	public LogicalTimeStamp lt;
 	public VectorTimeStamp vt;
+	public int groupSize=-1;
+	public int[] multicastVector = {};
 	public Message(String hostname,String dest, String action, String kind, String data){
 		this.hostname=src=hostname;
 		des = dest;
@@ -41,6 +43,11 @@ public class Message implements Comparable<Message>,Serializable{
 		this.id=id;
 	}
 	*/
+	public void setMulticastVector(int[] newMulticastVector){
+
+		
+		this.multicastVector = newMulticastVector;
+	}
 	public void set_hostname(String name){
 		this.hostname = name;
 	}
