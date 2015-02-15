@@ -31,6 +31,14 @@ public class Message implements Comparable<Message>,Serializable{
 		lt=new LogicalTimeStamp();
 		vt = new VectorTimeStamp(1);
 	}
+	public Message clone(Message old){
+		Message ans = new Message(old.src, old.des, old.action,old.kind,old.data);
+		ans.groupName=old.groupName;
+		ans.groupSize=old.groupSize;
+		ans.multicast=old.multicast;
+		ans.multicastVector=old.multicastVector;
+		return ans;
+	}
 	/*
 	public Message(String hostname,int id, String dest, String action, String kind, String data, VectorTimeStamp vt){
 		this.hostname=src=hostname;
