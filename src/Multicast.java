@@ -7,13 +7,9 @@ import java.util.LinkedList;
 public class Multicast {
 	MessagePasser mp;
 	HashMap<String, int[]> vectorMap = new HashMap<>();
-	ArrayList<LinkedList<Message>> holdBackQueueList = new ArrayList<>();
+	HashMap<String,LinkedList<Message>> holdBackQueueList = new HashMap<String,LinkedList<Message>>();
 	public Multicast(MessagePasser messagePasser){
 		this.mp = messagePasser;
-		for(int i=0; i<mp.groups.size(); i++){
-				holdBackQueueList.add(new LinkedList<Message>());
-				
-			}
 		for(String hold : mp.groups.keySet()){
 			int len=mp.groups.get(hold).size();
 			int[] groupVector = new int[len];
@@ -21,6 +17,8 @@ public class Multicast {
 				groupVector[j] = 0;
 			}
 			vectorMap.put(hold, groupVector);
+			holdBackQueueList.put(hold,new LinkedList<Message>());
+			
 		}
 	}
 	public void send(Message message) throws FileNotFoundException {
@@ -40,6 +38,33 @@ public class Multicast {
 	}
 	public void receive(Message mes) {
 		// TODO Auto-generated method stub
-		mp.messageRec.offer(mes);
+		int[] recVec = mes.multicastVector;
+		int length = mes.groupSize;
+		int[] curVec = new int[length];
+		for(int i=0; i<length; i++){
+			curVec[i] =  (vectorMap.get(mes.groupName))[i];
+		}
+		String check = judge(curVec, recVec);
+		switch(check){
+		case "rec":
+			System.out.println("receive multicast");
+			mp.messageRec.offer(mes);
+			break;
+		case "drop":
+			System.out.println("drop multicast");
+			break;
+		case "hold":
+			System.out.println("holdback multicast");
+			insert(this.holdBackQueueList.get(mes.groupName),mes);
+			break;
+		}
+	}
+	private void insert(LinkedList<Message> linkedList, Message mes) {
+		// TODO Auto-generated method stub
+		
+	}
+	private String judge(int[] curVec, int[] recVec) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
