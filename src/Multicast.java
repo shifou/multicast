@@ -27,6 +27,7 @@ public class Multicast {
 		for(int i=0; i<length; i++){
 			tmp[i] =  (vectorMap.get(message.groupName))[i];
 		}
+		tmp[mp.u2i.get(message.src)]+=1;
 		message.setMulticastVector(tmp);
 		for(String dest : mp.groups.get(message.groupName)){
 			if(!dest.equalsIgnoreCase(message.src)){
