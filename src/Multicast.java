@@ -45,10 +45,14 @@ public class Multicast {
 		int[] recVec = mes.multicastVector;
 		int length = mes.groupSize;
 		int[] curVec = new int[length];
+		System.out.print("rec: "+mes.getMultiVector()+" \now: ");
 		for(int i=0; i<length; i++){
 			curVec[i] =  (vectorMap.get(mes.groupName))[i];
+
+			System.out.print(curVec[i]+" ");
 		}
 		String check = judge(mp.u2i.get(mes.src),curVec, recVec);
+		System.out.println("\n"+check);
 		switch(check){
 		case "rec":
 			System.out.println("receive multicast");

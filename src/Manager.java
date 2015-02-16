@@ -63,6 +63,7 @@ public class Manager {
 					message = new Message(args[1],"",hold[2], hold[3],hold[4]);
 					message.multicast=true;
 					message.groupName=hold[1];
+					message.logicalTime=vec;
 					if(messagePasser.groups.containsKey(hold[1])==false)
 					{
 						System.out.println("no such group");
