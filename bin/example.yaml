@@ -1,15 +1,22 @@
+groups :
+  - name : Group1
+    member :
+      - alice
+      - bob
+      - charlie
+
 configuration :
 - name : alice
-  ip   : 128.237.207.187
+  ip   : 127.0.0.1
   port : 12344
 - name : bob
-  ip   : 128.237.211.92
+  ip   : 127.0.0.1
   port : 14255
 - name : charlie
-  ip   : 128.237.211.92
+  ip   : 127.0.0.1
   port : 12355
 - name : logger
-  ip   : 128.237.207.187
+  ip   : 127.0.0.1
   port : 12644
 
 sendRules :
