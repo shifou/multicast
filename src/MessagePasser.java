@@ -311,7 +311,7 @@ public class MessagePasser {
 			return new Message(null,null, null, null,"no message received");
 		}
 	}
-	private void receiveMessage() throws FileNotFoundException {
+	private void receiveMessage() {
 		Message mes;
 		if(!messageRec.isEmpty()){
 			mes = messageRec.poll();
@@ -347,16 +347,9 @@ public class MessagePasser {
 			default:
 				//default action
 				//System.out.println("receive: default");
-				if(mes.multicast)
-					this.multicast.receive(mes);
-				else
-					messages.offer(mes);
+				messages.offer(mes);
 				while(!delayRec.isEmpty()){
-					Message fkk = delayRec.poll();
-					if(fkk.multicast)
-						this.multicast.receive(fkk);
-					else
-						messages.offer(fkk);
+					messages.offer(delayRec.poll());
 				}
 			}
 	}

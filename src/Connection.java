@@ -65,6 +65,33 @@ public class Connection implements Runnable {
 
 					if(log==false)
 					{
+						if(mes.multicast)
+						{
+							String hold = config.recvRule(mes);
+							switch(hold){
+							case "drop":
+								break;
+							case "duplicate":
+								//System.out.println("receive: duplicate");
+								if(mes.duplicate)
+									this.multicast.receive(mes);
+								//messageRec.add(mes);
+								while(!this.multicast.delayQueue.isEmpty()){
+									this.multicast.receive(this.multicast.delayQueue.poll());
+								}
+								break;
+							case "delay":
+								//System.out.println("receive: delay");
+								this.multicast.delayQueue.offer(mes);
+								break;
+							default:
+								this.multicast.receive(mes);
+								while(!this.multicast.delayQueue.isEmpty()){
+									this.multicast.receive(this.multicast.delayQueue.poll());
+								}
+							}
+						}
+						else
 							messageQueue.offer(mes);
 					}
 					else

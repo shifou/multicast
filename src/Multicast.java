@@ -2,12 +2,14 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 
 public class Multicast {
 	MessagePasser mp;
 	HashMap<String, int[]> vectorMap = new HashMap<>();
 	HashMap<String,LinkedList<Message>> holdBackQueueList = new HashMap<String,LinkedList<Message>>();
+	public ConcurrentLinkedQueue<Message> delayQueue=new ConcurrentLinkedQueue<Message>();
 	public Multicast(MessagePasser messagePasser){
 		this.mp = messagePasser;
 		for(String hold : mp.groups.keySet()){
@@ -40,7 +42,14 @@ public class Multicast {
 	}
 	public synchronized void receive(Message mes) throws FileNotFoundException {
 		// TODO Auto-generated method stub
-
+		if(!mp.logicalTime)
+		{
+			mp.vt.updateTimeStamp(mes.vt);
+			mp.vt.Increment(mp.id);
+		}else{
+			mp.lt.updateTimeStamp(mes.lt);
+			mp.lt.Increment();
+		}
 		int[] recVec = mes.multicastVector;
 		int length = mes.groupSize;
 		int[] curVec = new int[length];
