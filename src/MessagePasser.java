@@ -84,29 +84,7 @@ public class MessagePasser {
 		new Thread(user).start();
 		
 	}
-	
-	private HashMap<String, Socket> getSocketMap(
-			HashMap<String, nodeInfo> nodes) {
-		// TODO Auto-generated method stub
-		HashMap<String, Socket> ans = new HashMap<String, Socket>();
-		for(String each:nodes.keySet())
-		{
-			nodeInfo hold= nodes.get(each);
-			try {
-				//System.out.println(hold.ip+"\t"+hold.port);
-				Socket sendd = new Socket(hold.ip, hold.port);
-				ans.put(each, sendd);
-			} catch (UnknownHostException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-		}
-		return ans;
-	}
+
 	public boolean reconfig() throws FileNotFoundException {
 		// TODO Auto-generated method stub
 		if(last>=new File(filename).lastModified())
@@ -117,7 +95,8 @@ public class MessagePasser {
 		
 		}	 
 		last=new File(filename).lastModified();
-		config = new configFileParse(filename);
+		configFileParse fk= new configFileParse(filename);
+		config = fk;
 		port = config.getPortbyName(username);
 		if(port==-1)
 		{
