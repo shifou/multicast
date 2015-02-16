@@ -34,7 +34,6 @@ public class Multicast {
 			if(!dest.equalsIgnoreCase(message.src)){
 				Message hold = message.clone(message);
 				hold.des = dest;
-				System.out.println("multicast: "+hold.toString());
 				mp.send(hold);
 			}
 		}

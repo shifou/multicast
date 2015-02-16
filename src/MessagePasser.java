@@ -173,6 +173,8 @@ public class MessagePasser {
 				break;
 			default:
 				//System.out.println("send");
+				if(mes.multicast)
+					System.out.println("multicast: "+hold.toString());
 				sendMessage(mes);
 				break;
 		}
