@@ -86,7 +86,7 @@ public class Message implements Comparable<Message>,Serializable{
 			return src+" to "+des+" seq: "+seq+" timestamp: "+vt.toString()+" act: "+action+"kind: "+kind+" dup: "+duplicate+"Data: "+data+" "+groupSize+" "+groupName+" "+getMultiVector(); 
 		
 	}
-	private String getMultiVector() {
+	public String getMultiVector() {
 		
 		if(this.multicast)
 		{
