@@ -107,7 +107,7 @@ public class MessagePasser {
 		}
 		return ans;
 	}
-	private boolean reconfig() throws FileNotFoundException {
+	public boolean reconfig() throws FileNotFoundException {
 		// TODO Auto-generated method stub
 		if(last>=new File(filename).lastModified())
 		{
@@ -132,8 +132,6 @@ public class MessagePasser {
 		}
 		u2i=config.getAllID();
 		nodes= config.getNetMap(username);
-		sockets.clear();
-		streams.clear();
 		//System.out.println(nodes);
 		//sockets = getSocketMap(nodes);
 		//user = new User(username, port,messageRec);

@@ -69,6 +69,7 @@ public class Connection implements Runnable {
 						if(mes.multicast)
 						{
 							String hold = config.recvRule(mes);
+							 
 							switch(hold){
 							case "drop":
 								break;
@@ -82,7 +83,7 @@ public class Connection implements Runnable {
 								}
 								break;
 							case "delay":
-								//System.out.println("receive: delay");
+								System.out.println("receive: delay");
 								this.multicast.delayQueue.offer(mes);
 								break;
 							default:

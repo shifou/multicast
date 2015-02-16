@@ -33,7 +33,8 @@ public class configFileParse {
 			    		NodeInfo.add(tmp);
 			    	}
 				}
-			    
+			   
+
 			    if(data.get("sendRules") != null)
 				{
 				
@@ -46,16 +47,14 @@ public class configFileParse {
 			    	}
 				}
 			   
-			    if(data.get("receiveRules") != null)
+		    if(data.get("receiveRules") != null)
 				{
-					
-				
+			    	
 			    	for(LinkedHashMap<String, Object> p :(ArrayList<LinkedHashMap<String, Object>>)data.get("receiveRules"))
 			    	{
 			    	LinkedHashMap<String, Object> tmp = new LinkedHashMap<String, Object>();
 			    	tmp.putAll(p);
-			    	recvRules.add(tmp);	    	
-			    	
+			    	recvRules.add(tmp);	    	 	
 			    	}
 				}
 			    
@@ -247,6 +246,7 @@ public class configFileParse {
 				//System.out.println(recvMsg.toString());
 				if(recvRules.isEmpty())
 				{
+					
 					return recvMsg.action;
 				}
 				for(LinkedHashMap<String, Object> t : recvRules)
@@ -302,10 +302,12 @@ public class configFileParse {
 					}
 					if(targetRule == true)
 					{
+						System.out.println(((String)t.get("action")));
 						return ((String)t.get("action"));
 					}
 					
 				}
+				System.out.println(recvMsg.action);
 				return recvMsg.action;   // no rule need to apply on this message
 			}
 			
