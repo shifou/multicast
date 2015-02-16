@@ -53,6 +53,13 @@ public class Multicast {
 		case "rec":
 			System.out.println("receive multicast");
 			mp.messageRec.offer(mes);
+			
+			System.out.println("==================================================");
+			System.out.println(mp.username);
+			System.out.println(mes);
+			System.out.println("==================================================");
+
+			
 			forward(mes);
 			int len = this.holdBackQueueList.get(mes.groupName).size();
 			int j = 0;
@@ -83,6 +90,11 @@ public class Multicast {
 				}else{
 					System.out.println("accept message from buffer");
 					mp.messageRec.offer(tmp);
+
+					System.out.println("==================================================");
+					System.out.println(mp.username);
+					System.out.println(mes);
+					System.out.println("==================================================");
 					forward(mes);
 					this.holdBackQueueList.get(mes.groupName).removeFirst();
 				}
@@ -105,9 +117,6 @@ public class Multicast {
 	{
 		
 		ArrayList<String> group = mp.groups.get(mes.groupName);
-		System.out.println("==================================================");
-		System.out.println(mp.username);
-		System.out.println("==================================================");
 		for(int i = 0; i < group.size(); i ++)
 		{
 			if(!group.get(i).equals(mp.username))
