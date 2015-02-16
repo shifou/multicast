@@ -81,9 +81,9 @@ public class Message implements Comparable<Message>,Serializable{
 	public String toString()
 	{
 		if(logicalTime)
-			return src+" to "+des+" seq: "+seq+" timestamp: "+lt.toString()+" act: "+action+"kind: "+kind+" dup: "+duplicate+"Data: "+data+" "+groupSize+" "+groupName+" "+getMultiVector(); 
+			return src+" to "+des+" seq: "+seq+" timestamp: "+lt.toString()+" act: "+action+" kind: "+kind+" dup: "+duplicate+" Data: "+data+" "+groupSize+" "+groupName+" "+getMultiVector(); 
 		else
-			return src+" to "+des+" seq: "+seq+" timestamp: "+vt.toString()+" act: "+action+"kind: "+kind+" dup: "+duplicate+"Data: "+data+" "+groupSize+" "+groupName+" "+getMultiVector(); 
+			return src+" to "+des+" seq: "+seq+" timestamp: "+vt.toString()+" act: "+action+" kind: "+kind+" dup: "+duplicate+" Data: "+data+" "+groupSize+" "+groupName+" "+getMultiVector(); 
 		
 	}
 	public String getMultiVector() {

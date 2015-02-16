@@ -45,7 +45,7 @@ public class Multicast {
 		int[] recVec = mes.multicastVector;
 		int length = mes.groupSize;
 		int[] curVec = new int[length];
-		System.out.print("rec: "+mes.getMultiVector()+" \now: ");
+		System.out.print("rec: "+mes.getMultiVector()+" \nnow: ");
 		for(int i=0; i<length; i++){
 			curVec[i] =  (vectorMap.get(mes.groupName))[i];
 

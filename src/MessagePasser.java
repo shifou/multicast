@@ -51,7 +51,7 @@ public class MessagePasser {
 		log=false;
 		groups = config.getGroups();
 		nodeNum = config.getSize();  // starts from 1;
-		System.out.println("---"+nodeNum);
+		//System.out.println("---"+nodeNum);
 		id = config.getId(username); // ID starts from 0, if can't find return -1
 		if(id==-1)
 		{
@@ -101,7 +101,7 @@ public class MessagePasser {
 		if(last>=new File(filename).lastModified())
 		{
 
-			System.out.println("last: "+new File(filename).lastModified());
+			//System.out.println("last: "+new File(filename).lastModified());
 			 return false;
 		
 		}	 
@@ -130,7 +130,7 @@ public class MessagePasser {
 	}
 
 	void send(Message mes) throws FileNotFoundException {
-		System.out.println("config changed: "+reconfig());
+		//System.out.println("config changed: "+reconfig());
 		//System.out.println(mes.des);
 		if(this.nodes.containsKey(mes.des)==false)
 		{
@@ -212,7 +212,7 @@ public class MessagePasser {
 			System.out.println("add "+mes.des+" to socket list");
 			nodeInfo hold= nodes.get(mes.des);
 			try {
-				System.out.println(hold.ip+"\t"+hold.port);
+				//System.out.println(hold.ip+"\t"+hold.port);
 				Socket sendd = new Socket(hold.ip, hold.port);
 				ObjectOutputStream out=new ObjectOutputStream(sendd.getOutputStream());
 				 ObjectInputStream objInput = new ObjectInputStream(sendd.getInputStream());
@@ -277,7 +277,7 @@ public class MessagePasser {
 	Message receive() throws FileNotFoundException {
 		//System.out.println(log);
 		
-		System.out.println("reread: "+reconfig());
+		//System.out.println("reread: "+reconfig());
 		receiveMessage();
 		if(!messages.isEmpty())
 		{

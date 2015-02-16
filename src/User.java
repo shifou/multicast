@@ -92,7 +92,7 @@ public class User implements Runnable{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			System.out.println("rec con from : "+name);
+			System.out.println("estab con from : "+name);
             if(nodes.containsKey(name)==false&&name.indexOf(" ")==-1)
             {
             		System.out.println("receive connection from unknown host");
