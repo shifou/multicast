@@ -35,6 +35,7 @@ public class MessagePasser {
 	public ConcurrentLinkedQueue<Message> messages = new ConcurrentLinkedQueue<Message>();
 	public LinkedHashMap<String,ArrayList<String>> groups = new LinkedHashMap<String,ArrayList<String>>();
 	public Multicast multicast;	
+	public HashMap<String, HashMap<String,Integer>> gid= new HashMap<String, HashMap<String,Integer>>();
 	public MessagePasser(String configuration_filename, String local_name,boolean lg) throws FileNotFoundException {
 		config = new configFileParse(configuration_filename);
 		filename = configuration_filename;
@@ -69,6 +70,16 @@ public class MessagePasser {
 			vt = new VectorTimeStamp(nodeNum);
 		//System.out.println(vt.toString());
 		multicast = new Multicast(this); 
+		for(String hh:groups.keySet())
+		{
+			HashMap<String,Integer> fk= new HashMap<String,Integer>();
+			int oo=0;
+			for(String tt:groups.get(hh))
+			{
+				fk.put(tt, oo++);
+			}
+			gid.put(hh, fk);
+		}
 		user = new User(username, port,messageRec,sockets, streams,nodes,multicast);
 		new Thread(user).start();
 		

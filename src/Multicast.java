@@ -25,7 +25,7 @@ public class Multicast {
 		int length = vectorMap.get(message.groupName).length;
 		int[] tmp = new int[length];
 		for(int i=0; i<length; i++){
-			if(i==mp.u2i.get(message.src))
+			if(i==mp.gid.get(message.groupName).get(message.src))
 				 (vectorMap.get(message.groupName))[i]+=1;
 			tmp[i] =  (vectorMap.get(message.groupName))[i];
 		}
@@ -57,7 +57,7 @@ public class Multicast {
 
 			System.out.print(curVec[i]+" ");
 		}
-		String check = judge(mp.u2i.get(mes.src),curVec, recVec);
+		String check = judge(mp.gid.get(mes.groupName).get(mes.src),curVec, recVec);
 		//System.out.println("\n"+check);
 		switch(check){
 		case "rec":
@@ -79,7 +79,7 @@ public class Multicast {
 				Message tmp = this.holdBackQueueList.get(mes.groupName).get(j);
 				for( int k =0; k < tmp.multicastVector.length; k++)
 				{
-					if(k != mp.u2i.get(mes.src))
+					if(k != mp.gid.get(mes.groupName).get(mes.src))
 					{
 						if(tmp.multicastVector[k] > curVec[k])
 						{
