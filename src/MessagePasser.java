@@ -80,7 +80,7 @@ public class MessagePasser {
 			}
 			gid.put(hh, fk);
 		}
-		user = new User(username, port,messageRec,sockets, streams,nodes,multicast);
+		user = new User(username, port,messageRec,sockets, streams,nodes,multicast,config);
 		new Thread(user).start();
 		
 	}
@@ -157,14 +157,14 @@ public class MessagePasser {
 		if(this.logicalTime)
 		{
 			this.lt.Increment();
-			System.out.println("send timestamp from: "+username+" with id "+id+" "+this.lt.toString());
+			//System.out.println("send timestamp from: "+username+" with id "+id+" "+this.lt.toString());
 			
 			mes.lt=this.lt;
 		}
 		else
 		{
 			this.vt.Increment(id);
-			System.out.println("send timestamp from: "+username+" with id "+id+" "+this.vt.toString());
+			//System.out.println("send timestamp from: "+username+" with id "+id+" "+this.vt.toString());
 			mes.vt=this.vt;
 		}
 		//.out.println("???"+this.vt.toString());
@@ -235,7 +235,7 @@ public class MessagePasser {
 				 Connection handler;
 				 out.writeObject(username);
 				 //out.writeChars(this.username);
-	             handler = new Connection(mes.des,sendd,out,objInput,messageRec,sockets,streams,multicast);
+	             handler = new Connection(mes.des,sendd,out,objInput,messageRec,sockets,streams,multicast,config);
 	             new Thread(handler).start();
 		         
 			} catch (UnknownHostException e) {
@@ -251,7 +251,7 @@ public class MessagePasser {
 		try{
 			//System.out.println("des: "+mes.des);
 		ObjectOutputStream out= streams.get(mes.des);
-		//System.out.println("-----------sending "+mes.toString());
+		System.out.println("-----------sending "+mes.toString());
 		out.writeObject(mes);
 		out.flush();
 		out.reset();
