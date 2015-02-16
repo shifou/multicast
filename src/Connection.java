@@ -65,9 +65,6 @@ public class Connection implements Runnable {
 
 					if(log==false)
 					{
-						if(mes.multicast)
-							this.multicast.receive(mes);
-						else
 							messageQueue.offer(mes);
 					}
 					else

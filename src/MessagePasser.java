@@ -296,6 +296,8 @@ public class MessagePasser {
 		{
 			//System.out.println("check queue: "+messages.isEmpty());
 			Message mes = messages.poll();
+			if(mes.multicast)
+				this.multicast.receive(mes);
 			if(this.logicalTime)
 				System.out.println(username+" rec timestamp: "+this.lt.toString());
 			else
