@@ -26,19 +26,21 @@ public class Multicast {
 		int length = vectorMap.get(message.groupName).length;
 		int[] tmp = new int[length];
 		for(int i=0; i<length; i++){
+			if(i==mp.u2i.get(message.src))
+				 (vectorMap.get(message.groupName))[i]+=1;
 			tmp[i] =  (vectorMap.get(message.groupName))[i];
 		}
-		tmp[mp.u2i.get(message.src)]+=1;
 		message.setMulticastVector(tmp);
 		for(String dest : mp.groups.get(message.groupName)){
 			if(!dest.equalsIgnoreCase(message.src)){
 				Message hold = message.clone(message);
 				hold.des = dest;
+				System.out.println("multicast: "+hold.toString());
 				mp.send(hold);
 			}
 		}
 	}
-	public void receive(Message mes) throws FileNotFoundException {
+	public synchronized void receive(Message mes) throws FileNotFoundException {
 		// TODO Auto-generated method stub
 		int[] recVec = mes.multicastVector;
 		int length = mes.groupSize;
