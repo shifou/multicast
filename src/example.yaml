@@ -1,3 +1,10 @@
+groups :
+  - name : Group1
+    member :
+      - alice
+      - bob
+      - charlie
+
 configuration :
 - name : alice
   ip   : 128.237.207.187
