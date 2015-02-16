@@ -160,7 +160,7 @@ public class MessagePasser {
 		String hold = config.sendRule(mes);
 		switch(hold){
 			case "drop":
-				System.out.println("drop");
+				//System.out.println("drop");
 				break;
 			case "duplicate":
 				sendMessage(mes);
@@ -168,11 +168,11 @@ public class MessagePasser {
 				sendMessage(mes);
 				break;
 			case "delay":
-				System.out.println("send delay");
+				//System.out.println("send delay");
 				delaySend.offer(mes);
 				break;
 			default:
-				System.out.println("send");
+				//System.out.println("send");
 				sendMessage(mes);
 				break;
 		}
@@ -238,7 +238,7 @@ public class MessagePasser {
 		try{
 			//System.out.println("des: "+mes.des);
 		ObjectOutputStream out= streams.get(mes.des);
-		System.out.println("-----------sending "+mes.toString());
+		//System.out.println("-----------sending "+mes.toString());
 		out.writeObject(mes);
 		out.flush();
 		out.reset();

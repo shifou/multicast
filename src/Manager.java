@@ -14,10 +14,10 @@ public class Manager {
 			switch(in.readLine())
 			{
 			case "vector":
-				 vec=true;
 				 flag=false;
 				 break;
 			case "logical":
+				vec=true;
 				flag=false;
 				break;
 			default:
