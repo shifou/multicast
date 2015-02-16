@@ -59,18 +59,14 @@ public class Multicast {
 
 			System.out.print(curVec[i]+" ");
 		}
-		String check = judge(mp.gid.get(mes.groupName).get(mes.src),curVec, recVec);
-		//System.out.println("\n"+check);
+		String check = judge(curVec, recVec);
+		System.out.println("------");
+		System.out.println("\n"+check);
 		switch(check){
 		case "rec":
 			System.out.println("receive multicast");
-			mp.messageRec.offer(mes);
+			mp.messages.offer(mes);
 			
-			System.out.println("==================================================");
-			System.out.println(mp.username);
-			System.out.println(mes);
-			System.out.println("==================================================");
-
 			vectorMap.get(mes.groupName)[mp.gid.get(mes.groupName).get(mes.src)] = mes.multicastVector[mp.gid.get(mes.groupName).get(mes.src)];
 			forward(mes);
 			int len = this.holdBackQueueList.get(mes.groupName).size();
@@ -101,12 +97,8 @@ public class Multicast {
 					break;
 				}else{
 					System.out.println("accept message from buffer");
-					mp.messageRec.offer(tmp);
+					mp.messages.offer(tmp);
 					vectorMap.get(mes.groupName)[mp.gid.get(mes.groupName).get(mes.src)] = mes.multicastVector[mp.gid.get(mes.groupName).get(mes.src)];
-					System.out.println("==================================================");
-					System.out.println(mp.username);
-					System.out.println(mes);
-					System.out.println("==================================================");
 					forward(mes);
 					this.holdBackQueueList.get(mes.groupName).removeFirst();
 				}
@@ -169,54 +161,36 @@ public class Multicast {
 		}
 	}
 	
-	private String judge(int index, int[] curVec, int[] recVec) {
+	private String judge(int[] curVec, int[] recVec) {
 		// TODO Auto-generated method stub
 		int len = curVec.length;
 		
-		if(curVec[index]+1 == recVec[index])
-		{
-			int counter = 0;
+			int counterLarg = 0;
+			
+			int diffOne = 0;
 			for(int i=0; i < len; i++)
 			{
-				if(i != index)
-				{
+				
 					if(curVec[i] >= recVec[i])
 					{
-						counter ++;
+						counterLarg ++;
+					}if(curVec[i] < recVec[i])
+					{
+						if(recVec[i] - curVec[i] ==1)
+						{
+							diffOne ++;
+						}
 					}
-				}
 			}
-			if(counter == len-1) // when i != j && recVec[i] <= curVec[i]
+			if(counterLarg == len-1 && diffOne ==1) // when i != j && recVec[i] <= curVec[i]
 			{
 				return "rec";
+			}else if(counterLarg == len){
+				return "drop";
 			}else{
 				return "hold";
 			}
-		}else if(curVec[index]+1 < recVec[index])
-		{
-			// hold in queue
-			int counter = 0;
-			for(int i=0; i < len; i++)
-			{
-				if(i != index)
-				{
-					if(curVec[i] <= recVec[i])
-					{
-						counter ++;
-					}
-				}
-			}
-			if(counter == len -1)
-			{
-				return "hold";
-			}
-			else{
-				return "drop";
-			}
-		}else{
-			// reject
-			return "drop";
-		}
+		
 
 		
 	}

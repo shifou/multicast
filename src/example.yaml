@@ -24,8 +24,10 @@ sendRules :
     src    : alice       
     dest   : charlie
     kind   : Ack
+
 receiveRules :
-  - action : delay         
+  - action : drop
+    src    : alice         
     dest   : charlie
     kind   : Ack
   # - action : ss 
@@ -53,7 +55,7 @@ receiveRules :
   #   src    : alice
   #   dest   : charlie
     
-receiveRules :
+#receiveRules :
   # - action : drop      
   #   src    : charlie       
   #   dest   : bob
