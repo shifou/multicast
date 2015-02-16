@@ -62,7 +62,6 @@ public class Connection implements Runnable {
 			while (running) {
 				try {
 					mes = (Message) objInput.readObject();
-					if(log)
 					
 					if(log==false)
 					{
