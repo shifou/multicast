@@ -20,18 +20,18 @@ configuration :
   port : 12644
 
 sendRules :
-  - action : ssss      
+  - action : sss      
     src    : alice       
-    dest   : bob
-    kind   : aa
-receiveRules :
-  - action : delay      
-    src    : alice      
-    dest   : logger
-  - action : drop 
-    src    : alice
-    dest   : bob
+    dest   : charlie
     kind   : Ack
+receiveRules :
+  - action : delay         
+    dest   : charlie
+    kind   : Ack
+  # - action : ss 
+  #   src    : alice
+  #   dest   : bob
+  #   kind   : Ack
   # - action : duplicate
   #   src    : charlie
   #   dest   : bob

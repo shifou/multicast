@@ -71,7 +71,7 @@ public class Multicast {
 			System.out.println(mes);
 			System.out.println("==================================================");
 
-			
+			vectorMap.get(mes.groupName)[mp.gid.get(mes.groupName).get(mes.src)] = mes.multicastVector[mp.gid.get(mes.groupName).get(mes.src)];
 			forward(mes);
 			int len = this.holdBackQueueList.get(mes.groupName).size();
 			int j = 0;
@@ -102,7 +102,7 @@ public class Multicast {
 				}else{
 					System.out.println("accept message from buffer");
 					mp.messageRec.offer(tmp);
-
+					vectorMap.get(mes.groupName)[mp.gid.get(mes.groupName).get(mes.src)] = mes.multicastVector[mp.gid.get(mes.groupName).get(mes.src)];
 					System.out.println("==================================================");
 					System.out.println(mp.username);
 					System.out.println(mes);
