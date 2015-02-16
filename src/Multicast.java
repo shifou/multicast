@@ -31,13 +31,13 @@ public class Multicast {
 		message.setMulticastVector(tmp);
 		for(String dest : mp.groups.get(message.groupName)){
 			if(!dest.equalsIgnoreCase(message.src)){
-				message.des = dest;
 				Message hold = message.clone(message);
+				hold.des = dest;
 				mp.send(hold);
 			}
 		}
 	}
-	public void receive(Message mes) {
+	public void receive(Message mes) throws FileNotFoundException {
 		// TODO Auto-generated method stub
 		int[] recVec = mes.multicastVector;
 		int length = mes.groupSize;
@@ -50,6 +50,40 @@ public class Multicast {
 		case "rec":
 			System.out.println("receive multicast");
 			mp.messageRec.offer(mes);
+			forward(mes);
+			int len = this.holdBackQueueList.get(mes.groupName).size();
+			int j = 0;
+			int flag = 0;
+			while(j < len)
+			{
+				Message tmp = this.holdBackQueueList.get(mes.groupName).get(j);
+				for( int k =0; k < tmp.multicastVector.length; k++)
+				{
+					if(k != mp.u2i.get(mes.src))
+					{
+						if(tmp.multicastVector[k] > curVec[k])
+						{
+							flag = 1;
+							break;
+						}
+					}else{
+						if(tmp.multicastVector[k] != curVec[k] + 1)
+						{
+							flag = 1;
+							break;
+						}
+					}
+				}
+				if(flag ==1)
+				{
+					break;
+				}else{
+					System.out.println("accept message from buffer");
+					mp.messageRec.offer(tmp);
+					forward(mes);
+					this.holdBackQueueList.get(mes.groupName).removeFirst();
+				}
+			}
 			break;
 		case "drop":
 			System.out.println("drop multicast");
@@ -60,40 +94,23 @@ public class Multicast {
 			break;
 		}
 		
-		int len = this.holdBackQueueList.get(mes.groupName).size();
-		int j = 0;
-		int flag = 0;
-		while(j < len)
+		
+	}
+	
+	private void forward(Message mes) throws FileNotFoundException
+	{
+		
+		ArrayList<String> group = mp.groups.get(mes.groupName);
+		for(int i = 0; i < group.size(); i ++)
 		{
-			Message tmp = this.holdBackQueueList.get(mes.groupName).get(j);
-			for( int k =0; k < tmp.multicastVector.length; k++)
+			if(!group.get(i).equals(mp.username))
 			{
-				if(k != mp.u2i.get(mes.src))
-				{
-					if(tmp.multicastVector[k] > curVec[k])
-					{
-						flag = 1;
-						break;
-					}
-				}else{
-					if(tmp.multicastVector[k] != curVec[k] + 1)
-					{
-						flag = 1;
-						break;
-					}
-				}
-			}
-			if(flag ==1)
-			{
-				break;
-			}else{
-				System.out.println("accept message from buffer");
-				mp.messageRec.offer(tmp);
-				this.holdBackQueueList.get(mes.groupName).removeFirst();
+				Message hold = mes.clone(mes);
+				hold.des = group.get(i);
+				mp.send(hold);
 			}
 		}
 	}
-	
 	private void insert(LinkedList<Message> linkedList, Message mes) {
 		
 		// TODO Auto-generated method stub
@@ -117,7 +134,7 @@ public class Multicast {
 			}
 			if(i == tmp.multicastVector.length-1)
 			{
-				linkedList.add(i,mes);
+				linkedList.addLast(mes);
 				break;
 			}
 		}
