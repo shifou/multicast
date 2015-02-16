@@ -59,7 +59,7 @@ public class Multicast {
 			System.out.print(curVec[i]+" ");
 		}
 		String check = judge(mp.u2i.get(mes.src),curVec, recVec);
-		System.out.println("\n"+check);
+		//System.out.println("\n"+check);
 		switch(check){
 		case "rec":
 			System.out.println("receive multicast");
