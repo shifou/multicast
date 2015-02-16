@@ -227,10 +227,11 @@ public class MessagePasser {
 		         
 			} catch (UnknownHostException e) {
 				System.out.println("can not establish connection");
-				e.printStackTrace();
+				//e.printStackTrace();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				System.out.println("can not establish connection");
+				
 			}
 			
 		}

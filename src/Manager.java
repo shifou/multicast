@@ -63,12 +63,12 @@ public class Manager {
 					message = new Message(args[1],hold[1],hold[2], hold[3],hold[4]);
 					message.multicast=true;
 					message.groupName=hold[5];
-					if(messagePasser.groups.containsKey(hold[1])==false)
+					if(messagePasser.groups.containsKey(hold[5])==false)
 					{
 						System.out.println("no such group");
 						break;
 					}
-					message.groupSize=messagePasser.groups.get(hold[1]).size();
+					message.groupSize=messagePasser.groups.get(hold[5]).size();
 					message.set_seqNum(seq++);
 					if(hold[6].equals("y"))
 						messagePasser.log=true;
