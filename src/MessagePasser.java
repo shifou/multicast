@@ -33,7 +33,7 @@ public class MessagePasser {
 	public ConcurrentLinkedQueue<Message> delaySend = new ConcurrentLinkedQueue<Message>();
 	public ConcurrentLinkedQueue<Message> delayRec = new ConcurrentLinkedQueue<Message>();
 	public ConcurrentLinkedQueue<Message> messages = new ConcurrentLinkedQueue<Message>();
-	public HashMap<String,ArrayList<String>> groups = new HashMap<String,ArrayList<String>>();
+	public LinkedHashMap<String,ArrayList<String>> groups = new LinkedHashMap<String,ArrayList<String>>();
 	public Multicast multicast;	
 	public MessagePasser(String configuration_filename, String local_name,boolean lg) throws FileNotFoundException {
 		config = new configFileParse(configuration_filename);

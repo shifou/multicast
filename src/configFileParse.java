@@ -18,6 +18,7 @@ public class configFileParse {
 			    NodeInfo = new ArrayList<LinkedHashMap<String,Object>>();
 			    sendRules = new ArrayList<LinkedHashMap<String,Object>>();
 			    recvRules = new ArrayList<LinkedHashMap<String,Object>>();
+			    groups = new ArrayList<LinkedHashMap<String,Object>>();
 			    InputStream input = new FileInputStream(new File(configFile));
 			    Yaml yaml = new Yaml();
 			    LinkedHashMap<String,Object> data = (LinkedHashMap<String, Object>)yaml.load(input);
@@ -64,7 +65,10 @@ public class configFileParse {
 			    	{
 			    		LinkedHashMap<String, Object> tmp = new LinkedHashMap<String, Object>();
 			    		tmp.putAll(p);
+			    		System.out.println(tmp);
+			    		
 			    		groups.add(tmp);
+			    		
 			    	}
 				}
 			  
