@@ -103,11 +103,15 @@ public class Multicast {
 	{
 		
 		ArrayList<String> group = mp.groups.get(mes.groupName);
+		System.out.println("==================================================");
+		System.out.println(mp.username);
+		System.out.println("==================================================");
 		for(int i = 0; i < group.size(); i ++)
 		{
 			if(!group.get(i).equals(mp.username))
 			{
 				Message hold = mes.clone(mes);
+				hold.src = mp.username;
 				hold.des = group.get(i);
 				mp.send(hold);
 			}
