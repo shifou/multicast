@@ -11,7 +11,6 @@ public class Multicast {
 	public Multicast(MessagePasser messagePasser){
 		this.mp = messagePasser;
 		for(String hold : mp.groups.keySet()){
-			System.out.println(hold);
 			int len=mp.groups.get(hold).size();
 			int[] groupVector = new int[len];
 			for(int j=0; j<len; j++){
@@ -42,6 +41,14 @@ public class Multicast {
 	}
 	public synchronized void receive(Message mes) throws FileNotFoundException {
 		// TODO Auto-generated method stub
+		if(!mp.logicalTime)
+		{
+			mp.vt.updateTimeStamp(mes.vt);
+			mp.vt.Increment(mp.id);
+		}else{
+			mp.lt.updateTimeStamp(mes.lt);
+			mp.lt.Increment();
+		}
 		int[] recVec = mes.multicastVector;
 		int length = mes.groupSize;
 		int[] curVec = new int[length];

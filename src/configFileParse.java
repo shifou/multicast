@@ -64,9 +64,7 @@ public class configFileParse {
 			    	for(LinkedHashMap<String, Object> p : (ArrayList<LinkedHashMap<String, Object>>)data.get("groups"))
 			    	{
 			    		LinkedHashMap<String, Object> tmp = new LinkedHashMap<String, Object>();
-			    		tmp.putAll(p);
-			    		System.out.println(tmp);
-			    		
+			    		tmp.putAll(p);			    		
 			    		groups.add(tmp);
 			    		
 			    	}
