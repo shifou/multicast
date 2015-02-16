@@ -31,13 +31,13 @@ public class Multicast {
 		message.setMulticastVector(tmp);
 		for(String dest : mp.groups.get(message.groupName)){
 			if(!dest.equalsIgnoreCase(message.src)){
-				message.des = dest;
 				Message hold = message.clone(message);
+				hold.des = dest;
 				mp.send(hold);
 			}
 		}
 	}
-	public void receive(Message mes) {
+	public void receive(Message mes) throws FileNotFoundException {
 		// TODO Auto-generated method stub
 		int[] recVec = mes.multicastVector;
 		int length = mes.groupSize;
@@ -50,7 +50,7 @@ public class Multicast {
 		case "rec":
 			System.out.println("receive multicast");
 			mp.messageRec.offer(mes);
-			
+			forward(mes);
 			int len = this.holdBackQueueList.get(mes.groupName).size();
 			int j = 0;
 			int flag = 0;
@@ -80,6 +80,7 @@ public class Multicast {
 				}else{
 					System.out.println("accept message from buffer");
 					mp.messageRec.offer(tmp);
+					forward(mes);
 					this.holdBackQueueList.get(mes.groupName).removeFirst();
 				}
 			}
@@ -96,6 +97,20 @@ public class Multicast {
 		
 	}
 	
+	private void forward(Message mes) throws FileNotFoundException
+	{
+		
+		ArrayList<String> group = mp.groups.get(mes.groupName);
+		for(int i = 0; i < group.size(); i ++)
+		{
+			if(!group.get(i).equals(mp.username))
+			{
+				Message hold = mes.clone(mes);
+				hold.des = group.get(i);
+				mp.send(hold);
+			}
+		}
+	}
 	private void insert(LinkedList<Message> linkedList, Message mes) {
 		
 		// TODO Auto-generated method stub
