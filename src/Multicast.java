@@ -11,7 +11,6 @@ public class Multicast {
 	public Multicast(MessagePasser messagePasser){
 		this.mp = messagePasser;
 		for(String hold : mp.groups.keySet()){
-			System.out.println(hold);
 			int len=mp.groups.get(hold).size();
 			int[] groupVector = new int[len];
 			for(int j=0; j<len; j++){
@@ -42,6 +41,14 @@ public class Multicast {
 	}
 	public synchronized void receive(Message mes) throws FileNotFoundException {
 		// TODO Auto-generated method stub
+		if(!mp.logicalTime)
+		{
+			mp.vt.updateTimeStamp(mes.vt);
+			mp.vt.Increment(mp.id);
+		}else{
+			mp.lt.updateTimeStamp(mes.lt);
+			mp.lt.Increment();
+		}
 		int[] recVec = mes.multicastVector;
 		int length = mes.groupSize;
 		int[] curVec = new int[length];
@@ -57,6 +64,13 @@ public class Multicast {
 		case "rec":
 			System.out.println("receive multicast");
 			mp.messageRec.offer(mes);
+			
+			System.out.println("==================================================");
+			System.out.println(mp.username);
+			System.out.println(mes);
+			System.out.println("==================================================");
+
+			
 			forward(mes);
 			int len = this.holdBackQueueList.get(mes.groupName).size();
 			int j = 0;
@@ -87,6 +101,11 @@ public class Multicast {
 				}else{
 					System.out.println("accept message from buffer");
 					mp.messageRec.offer(tmp);
+
+					System.out.println("==================================================");
+					System.out.println(mp.username);
+					System.out.println(mes);
+					System.out.println("==================================================");
 					forward(mes);
 					this.holdBackQueueList.get(mes.groupName).removeFirst();
 				}
@@ -109,9 +128,6 @@ public class Multicast {
 	{
 		
 		ArrayList<String> group = mp.groups.get(mes.groupName);
-		System.out.println("==================================================");
-		System.out.println(mp.username);
-		System.out.println("==================================================");
 		for(int i = 0; i < group.size(); i ++)
 		{
 			if(!group.get(i).equals(mp.username))
