@@ -11,6 +11,7 @@ public class Multicast {
 	public Multicast(MessagePasser messagePasser){
 		this.mp = messagePasser;
 		for(String hold : mp.groups.keySet()){
+			System.out.println(hold);
 			int len=mp.groups.get(hold).size();
 			int[] groupVector = new int[len];
 			for(int j=0; j<len; j++){
