@@ -1,7 +1,10 @@
 groups :
   - name : Group1
-    member : alice
-      
+    member :
+      - alice
+      - bob
+      - charlie
+
 configuration :
 - name : alice
   ip   : 127.0.0.1
