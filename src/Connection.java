@@ -62,7 +62,10 @@ public class Connection implements Runnable {
 			while (running) {
 				try {
 					mes = (Message) objInput.readObject();
+<<<<<<< HEAD
 					
+=======
+>>>>>>> 585515f6f7e3f4acd95ff4e3db010216c2ed02d9
 					if(log==false)
 					{
 						if(mes.multicast)
