@@ -60,6 +60,7 @@ public class Manager {
 					messagePasser.issueTimestamp();
 					break;
 				case "multicast":
+					//multicast#Group1#abc#abc#haha#n
 					message = new Message(args[1],"",hold[2], hold[3],hold[4]);
 					message.multicast=true;
 					message.groupName=hold[1];

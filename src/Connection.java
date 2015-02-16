@@ -68,8 +68,6 @@ public class Connection implements Runnable {
 					{
 						if(mes.multicast)
 						{
-							if(config==null)
-								 System.out.println("------");
 							String hold = config.recvRule(mes);
 							switch(hold){
 							case "drop":
