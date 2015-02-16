@@ -84,6 +84,7 @@ public class Multicast {
 					forward(mes);
 					this.holdBackQueueList.get(mes.groupName).removeFirst();
 				}
+				j++;
 			}
 			break;
 		case "drop":
