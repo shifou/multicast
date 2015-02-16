@@ -93,6 +93,7 @@ public class configFileParse {
 				if(g.get("name") != null)
 				{
 					tmp.put((String) g.get("name"), (ArrayList<String>)g.get("members"));	
+
 				}
 			}
 			return tmp;

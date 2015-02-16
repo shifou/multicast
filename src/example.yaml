@@ -1,6 +1,6 @@
 groups :
   - name : Group1
-    member :
+    members :
       - alice
       - bob
       - charlie
