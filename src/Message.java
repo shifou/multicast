@@ -34,6 +34,10 @@ public class Message implements Comparable<Message>,Serializable{
 	public Message clone(Message old){
 		Message ans = new Message(old.src, old.des, old.action,old.kind,old.data);
 		ans.groupName=old.groupName;
+		ans.seq=old.seq;
+		ans.logicalTime=old.logicalTime;
+		ans.id=old.id;
+		ans.duplicate=old.duplicate;
 		ans.groupSize=old.groupSize;
 		ans.multicast=old.multicast;
 		ans.multicastVector=old.multicastVector;
@@ -77,12 +81,23 @@ public class Message implements Comparable<Message>,Serializable{
 	public String toString()
 	{
 		if(logicalTime)
-			return src+" to "+des+" "+seq+" "+lt.toString()+" act: "+action+"kind: "+kind+" dup: "+duplicate+"Data: "+data; 
+			return src+" to "+des+" "+seq+" "+lt.toString()+" act: "+action+"kind: "+kind+" dup: "+duplicate+"Data: "+data+" "+groupSize+" "+groupName+" "+getMultiVector(); 
 		else
-			return src+" to "+des+" "+seq+" "+vt.toString()+" act: "+action+"kind: "+kind+" dup: "+duplicate+"Data: "+data; 
+			return src+" to "+des+" "+seq+" "+vt.toString()+" act: "+action+"kind: "+kind+" dup: "+duplicate+"Data: "+data+" "+groupSize+" "+groupName+" "+getMultiVector(); 
 		
 	}
-
+	private String getMultiVector() {
+		
+		if(this.multicast)
+		{
+			String ans="";
+			for(int i=0;i<groupSize;i++)
+				ans+=(multicastVector[i]+" ");
+			return ans;
+		}
+		else
+			return "no multi";
+	}
 	public String getKind() {
 		// TODO Auto-generated method stub
 		return kind;
