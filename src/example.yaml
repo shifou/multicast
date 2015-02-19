@@ -21,7 +21,7 @@ configuration :
 sendRules :
   - action : drop
     src    : alice
-    des    : bob
+    dest   : bob
 receiveRules :
 
   # - action : ss 

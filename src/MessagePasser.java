@@ -148,7 +148,7 @@ public class MessagePasser {
 		String hold = config.sendRule(mes);
 		switch(hold){
 			case "drop":
-				//System.out.println("drop");
+				System.out.println("drop send");
 				break;
 			case "duplicate":
 				sendMessage(mes);
@@ -156,7 +156,7 @@ public class MessagePasser {
 				sendMessage(mes);
 				break;
 			case "delay":
-				//System.out.println("send delay");
+				System.out.println("send delay");
 				delaySend.offer(mes);
 				break;
 			default:

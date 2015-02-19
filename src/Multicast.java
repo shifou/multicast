@@ -67,7 +67,7 @@ public class Multicast {
 			System.out.print(curVec[i]+" ");
 		}
 		String check = judge(curVec, recVec);
-		//System.out.println("------");
+		System.out.println("------");
 		//System.out.println("\n"+check);
 		switch(check){
 		case "rec":

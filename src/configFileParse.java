@@ -190,6 +190,7 @@ public class configFileParse {
 						{
 							targetRule = (targetRule && true);
 						}else{
+							//System.out.println(sendMsg.des+"???");
 							continue;
 						}
 					}
