@@ -3,8 +3,10 @@ groups :
     members :
       - alice
       - bob
+  - name : Group2
+    members :
+      - alice
       - charlie
-
 configuration :
 - name : alice
   ip   : 127.0.0.1
@@ -15,20 +17,17 @@ configuration :
 - name : charlie
   ip   : 127.0.0.1
   port : 12355
-- name : logger
+- name : def
   ip   : 127.0.0.1
   port : 12644
 
 sendRules :
-  - action : sss      
+  - action : delay      
     src    : alice       
-    dest   : charlie
     kind   : Ack
 
 receiveRules :
-  - action : delay     
-    dest   : charlie
-    kind   : Ack
+
   # - action : ss 
   #   src    : alice
   #   dest   : bob

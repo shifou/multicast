@@ -61,6 +61,12 @@ public class Manager {
 					break;
 				case "multicast":
 					//multicast#Group1#abc#abc#haha#n
+					if(hold.length!=6)
+					{
+						//System.err.println("wrong send command!\n");
+						System.out.println("usage: multicast#bob#Action#kind#what is your name#y");
+						break;
+					}
 					message = new Message(args[1],"",hold[2], hold[3],hold[4]);
 					message.multicast=true;
 					message.groupName=hold[1];

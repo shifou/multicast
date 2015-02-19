@@ -169,7 +169,7 @@ public class configFileParse {
 				//System.out.println(sendMsg.toString());
 				if(sendRules.isEmpty())
 				{
-					return sendMsg.action;
+					return "ok";
 				}
 				for(LinkedHashMap<String, Object> t : sendRules)
 				{
@@ -238,7 +238,7 @@ public class configFileParse {
 					}
 					
 				}
-				return sendMsg.action;   // no rule need to apply on this message
+				return "ok";   // no rule need to apply on this message
 			}
 			
 			public String recvRule(Message recvMsg)
@@ -247,7 +247,7 @@ public class configFileParse {
 				if(recvRules.isEmpty())
 				{
 					
-					return recvMsg.action;
+					return "ok";
 				}
 				for(LinkedHashMap<String, Object> t : recvRules)
 				{
@@ -307,8 +307,8 @@ public class configFileParse {
 					}
 					
 				}
-				System.out.println(recvMsg.action);
-				return recvMsg.action;   // no rule need to apply on this message
+				//System.out.println(recvMsg.action);
+				return "ok";   // no rule need to apply on this message
 			}
 			
 			

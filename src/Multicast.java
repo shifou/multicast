@@ -40,6 +40,8 @@ public class Multicast {
 				hold.des = dest;
 				mp.send(hold);
 			}
+			else
+				mp.messages.offer(message);
 		}
 	}
 	public synchronized void receive(Message mes) throws FileNotFoundException {
@@ -63,8 +65,8 @@ public class Multicast {
 			System.out.print(curVec[i]+" ");
 		}
 		String check = judge(curVec, recVec);
-		System.out.println("------");
-		System.out.println("\n"+check);
+		//System.out.println("------");
+		//System.out.println("\n"+check);
 		switch(check){
 		case "rec":
 			System.out.println("receive multicast");
@@ -75,6 +77,7 @@ public class Multicast {
 			int len = this.holdBackQueueList.get(mes.groupName).size();
 			int j = 0;
 			int flag = 0;
+			System.out.println("---"+len);
 			while(j < len)
 			{
 				Message tmp = this.holdBackQueueList.get(mes.groupName).get(j);
@@ -105,7 +108,8 @@ public class Multicast {
 					forward(mes);
 					this.holdBackQueueList.get(mes.groupName).removeFirst();
 				}
-				j++;
+				len= this.holdBackQueueList.get(mes.groupName).size();
+				j=0;
 			}
 			break;
 		case "drop":

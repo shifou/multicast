@@ -3,6 +3,9 @@ groups :
     members :
       - alice
       - bob
+  - name : Group2
+    members :
+      - alice
       - charlie
 configuration :
 - name : alice
@@ -24,9 +27,7 @@ sendRules :
     kind   : Ack
 
 receiveRules :
-  - action : delay     
-    dest   : charlie
-    kind   : Ack
+
   # - action : ss 
   #   src    : alice
   #   dest   : bob
