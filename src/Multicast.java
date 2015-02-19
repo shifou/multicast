@@ -42,8 +42,6 @@ public class Multicast {
 			}else{
 				mp.messages.offer(message);
 			}
-			else
-				mp.messages.offer(message);
 		}
 	}
 	
@@ -73,7 +71,7 @@ public class Multicast {
 		//System.out.println("\n"+check);
 		switch(check){
 		case "rec":
-			System.out.println("receive multicast"+ "size of queue is" +this.holdBackQueueList.get(mes.groupName).size());
+			//System.out.println("receive multicast"+ "size of queue is" +this.holdBackQueueList.get(mes.groupName).size());
 			mp.messages.offer(mes);
 			// TODO: 
 			vectorMap.get(mes.groupName)[mp.gid.get(mes.groupName).get(mes.src)] = mes.multicastVector[mp.gid.get(mes.groupName).get(mes.src)];
@@ -81,7 +79,7 @@ public class Multicast {
 			int len = this.holdBackQueueList.get(mes.groupName).size();
 			int j = 0;
 			int flag = 0;
-			System.out.println("---"+len);
+			//System.out.println("---"+len);
 			while(j < len)
 			{
 				Message tmp = this.holdBackQueueList.get(mes.groupName).get(j);
@@ -114,6 +112,7 @@ public class Multicast {
 				}
 				len= this.holdBackQueueList.get(mes.groupName).size();
 				j=0;
+				flag=0;
 			}
 			break;
 		case "drop":
