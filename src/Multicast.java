@@ -24,7 +24,7 @@ public class Multicast {
 		}
 	}
 	public void send(Message message) throws FileNotFoundException {
-		mp.reconfig();
+		//mp.reconfig();
 		
 		int length = vectorMap.get(message.groupName).length;
 		int[] tmp = new int[length];
@@ -44,7 +44,7 @@ public class Multicast {
 	}
 	public synchronized void receive(Message mes) throws FileNotFoundException {
 		// TODO Auto-generated method stub
-		mp.reconfig();
+		//mp.reconfig();
 		if(!mp.logicalTime)
 		{
 			mp.vt.updateTimeStamp(mes.vt);
