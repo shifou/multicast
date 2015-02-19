@@ -42,6 +42,8 @@ public class Multicast {
 			}else{
 				mp.messages.offer(message);
 			}
+			else
+				mp.messages.offer(message);
 		}
 	}
 	
@@ -67,8 +69,8 @@ public class Multicast {
 			System.out.print(curVec[i]+" ");
 		}
 		String check = judge(curVec, recVec);
-		System.out.println("------");
-		System.out.println("\n"+check);
+		//System.out.println("------");
+		//System.out.println("\n"+check);
 		switch(check){
 		case "rec":
 			System.out.println("receive multicast"+ "size of queue is" +this.holdBackQueueList.get(mes.groupName).size());
@@ -79,6 +81,7 @@ public class Multicast {
 			int len = this.holdBackQueueList.get(mes.groupName).size();
 			int j = 0;
 			int flag = 0;
+			System.out.println("---"+len);
 			while(j < len)
 			{
 				Message tmp = this.holdBackQueueList.get(mes.groupName).get(j);
@@ -109,7 +112,8 @@ public class Multicast {
 					forward(tmp);
 					this.holdBackQueueList.get(tmp.groupName).removeFirst();
 				}
-				j++;
+				len= this.holdBackQueueList.get(mes.groupName).size();
+				j=0;
 			}
 			break;
 		case "drop":

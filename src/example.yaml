@@ -3,9 +3,14 @@ groups :
     members :
       - alice
       - bob
+<<<<<<< HEAD
       - def
   - name : Group2
     members : 
+=======
+  - name : Group2
+    members :
+>>>>>>> 09a429d8dbb4482b982e4fda54920d301ccff62d
       - alice
       - charlie
 configuration :
@@ -24,13 +29,15 @@ configuration :
 
 sendRules :
   - action : delay      
+<<<<<<< HEAD
     src    : alice
+=======
+    src    : alice       
+>>>>>>> 09a429d8dbb4482b982e4fda54920d301ccff62d
     kind   : Ack
 
 receiveRules :
-  - action : delay     
-    dest   : charlie
-    kind   : Ack
+
   # - action : ss 
   #   src    : alice
   #   dest   : bob
