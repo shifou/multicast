@@ -21,7 +21,11 @@ configuration :
 sendRules :
   - action : drop
     src    : alice
+    kind   : tt
     dest   : bob
+  - action : delay     
+    dest   : charlie
+    kind   : Ack
 receiveRules :
 
   # - action : ss 

@@ -1,8 +1,13 @@
+
 groups :
   - name : Group1
     members :
       - alice
       - bob
+      - def
+  - name : Group2
+    members :
+      - alice
       - charlie
 configuration :
 - name : alice
@@ -21,7 +26,11 @@ configuration :
 sendRules :
   - action : drop
     src    : alice
+    kind   : tt
     dest   : bob
+  - action : delay     
+    dest   : def
+    kind   : Ack
 receiveRules :
 
   # - action : ss 
