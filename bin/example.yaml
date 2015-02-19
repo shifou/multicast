@@ -3,8 +3,11 @@ groups :
     members :
       - alice
       - bob
+      - def
+  - name : Group2
+    members : 
+      - alice
       - charlie
-
 configuration :
 - name : alice
   ip   : 127.0.0.1
@@ -15,14 +18,13 @@ configuration :
 - name : charlie
   ip   : 127.0.0.1
   port : 12355
-- name : logger
+- name : def
   ip   : 127.0.0.1
   port : 12644
 
 sendRules :
-  - action : sss      
-    src    : alice       
-    dest   : charlie
+  - action : delay      
+    src    : alice
     kind   : Ack
 
 receiveRules :

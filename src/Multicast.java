@@ -39,9 +39,12 @@ public class Multicast {
 				Message hold = message.clone(message);
 				hold.des = dest;
 				mp.send(hold);
+			}else{
+				mp.messages.offer(message);
 			}
 		}
 	}
+	
 	public synchronized void receive(Message mes) throws FileNotFoundException {
 		// TODO Auto-generated method stub
 		//mp.reconfig();
@@ -53,6 +56,7 @@ public class Multicast {
 			mp.lt.updateTimeStamp(mes.lt);
 			mp.lt.Increment();
 		}
+		
 		int[] recVec = mes.multicastVector;
 		int length = mes.groupSize;
 		int[] curVec = new int[length];
@@ -67,9 +71,9 @@ public class Multicast {
 		System.out.println("\n"+check);
 		switch(check){
 		case "rec":
-			System.out.println("receive multicast");
+			System.out.println("receive multicast"+ "size of queue is" +this.holdBackQueueList.get(mes.groupName).size());
 			mp.messages.offer(mes);
-			
+			// TODO: 
 			vectorMap.get(mes.groupName)[mp.gid.get(mes.groupName).get(mes.src)] = mes.multicastVector[mp.gid.get(mes.groupName).get(mes.src)];
 			forward(mes);
 			int len = this.holdBackQueueList.get(mes.groupName).size();
@@ -101,9 +105,9 @@ public class Multicast {
 				}else{
 					System.out.println("accept message from buffer");
 					mp.messages.offer(tmp);
-					vectorMap.get(mes.groupName)[mp.gid.get(mes.groupName).get(mes.src)] = mes.multicastVector[mp.gid.get(mes.groupName).get(mes.src)];
-					forward(mes);
-					this.holdBackQueueList.get(mes.groupName).removeFirst();
+					vectorMap.get(tmp.groupName)[mp.gid.get(tmp.groupName).get(tmp.src)] = tmp.multicastVector[mp.gid.get(tmp.groupName).get(tmp.src)];
+					forward(tmp);
+					this.holdBackQueueList.get(tmp.groupName).removeFirst();
 				}
 				j++;
 			}
@@ -135,9 +139,15 @@ public class Multicast {
 			}
 		}
 	}
+	
 	private void insert(LinkedList<Message> linkedList, Message mes) {
 		
 		// TODO Auto-generated method stub
+		if(linkedList.isEmpty())
+		{
+			linkedList.add(mes);
+			return;
+		}
 		for(int i = 0; i < linkedList.size();i++)
 		{
 			Message tmp = linkedList.get(i);
