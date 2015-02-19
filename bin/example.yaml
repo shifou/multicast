@@ -25,7 +25,9 @@ sendRules :
   - action : delay      
     src    : alice       
     kind   : Ack
-
+  - action : drop
+    src    : alice
+    des    : bob
 receiveRules :
 
   # - action : ss 

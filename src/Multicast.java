@@ -83,8 +83,17 @@ public class Multicast {
 			while(j < len)
 			{
 				Message tmp = this.holdBackQueueList.get(mes.groupName).get(j);
+				/*for(int i=0; i<tmp.multicastVector.length; i++){
+					curVec[i] =  (vectorMap.get(mes.groupName))[i];
+					System.out.print(curVec[i]+" ");
+				}
+				for(int i=0; i<tmp.multicastVector.length; i++){
+					//tmp.multicastVector[i] =  (vectorMap.get(mes.groupName))[i];
+					System.out.print(tmp.multicastVector[i]+" ");
+				}*/
 				for( int k =0; k < tmp.multicastVector.length; k++)
 				{
+					//System.out.println("----"+k+"\t"+tmp.multicastVector[k]+"\t"+curVec[k]);
 					if(k != mp.gid.get(mes.groupName).get(mes.src))
 					{
 						if(tmp.multicastVector[k] > curVec[k])

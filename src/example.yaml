@@ -3,9 +3,6 @@ groups :
     members :
       - alice
       - bob
-  - name : Group2
-    members :
-      - alice
       - charlie
 configuration :
 - name : alice
@@ -22,10 +19,9 @@ configuration :
   port : 12644
 
 sendRules :
-  - action : delay      
-    src    : alice       
-    kind   : Ack
-
+  - action : drop
+    src    : alice
+    des    : bob
 receiveRules :
 
   # - action : ss 
