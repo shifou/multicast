@@ -1,8 +1,13 @@
+
 groups :
   - name : Group1
     members :
       - alice
       - bob
+      - def
+  - name : Group2
+    members :
+      - alice
       - charlie
 configuration :
 - name : alice
@@ -19,14 +24,14 @@ configuration :
   port : 12644
 
 sendRules :
+  - action : delay     
+    dest   : def
+    kind   : Ack
+receiveRules :
   - action : drop
     src    : alice
     kind   : tt
     dest   : bob
-  - action : delay     
-    dest   : charlie
-    kind   : Ack
-receiveRules :
 
   # - action : ss 
   #   src    : alice

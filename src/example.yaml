@@ -24,14 +24,14 @@ configuration :
   port : 12644
 
 sendRules :
-  - action : drop
-    src    : alice
-    kind   : tt
-    dest   : bob
   - action : delay     
     dest   : def
     kind   : Ack
 receiveRules :
+  - action : drop
+    src    : alice
+    kind   : tt
+    dest   : bob
 
   # - action : ss 
   #   src    : alice
