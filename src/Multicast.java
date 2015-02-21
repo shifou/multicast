@@ -145,7 +145,7 @@ public class Multicast {
 			if(!group.get(i).equals(mp.username))
 			{
 				Message hold = mes.clone(mes);
-				hold.src = mp.username;
+				//hold.src = mp.username;
 				hold.des = group.get(i);
 				mp.send(hold);
 			}
